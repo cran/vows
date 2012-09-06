@@ -1,0 +1,70 @@
+\name{qplsc.mp}
+\alias{qplsc.mp}
+%- Also NEED an '\alias' for EACH other topic documented here.
+\title{
+Quadratically penalized least squares with constraints
+}
+\description{
+Fits a possibly very large number of models, with common design matrix, by quadratically penalized least squares, with identifiability constraints imposed. This function serves as the fitting engine for \code{\link{semipar.mp}}.
+}
+\usage{
+qplsc.mp(Y, modmat, penmat, constr.list = NULL, lsp, nulldim = NULL, 
+         store.reml = FALSE, store.fitted = FALSE)
+}
+%- maybe also 'usage' for other objects documented here.
+\arguments{
+  \item{Y}{
+an \eqn{n \times V} response matrix (\eqn{V} refers to number of models fitted in parallel, e.g., voxels in neuroimaging applications).
+}
+  \item{modmat}{
+model matrix, e.g., a matrix of B-spline basis functions.
+}
+  \item{penmat}{
+penalty matrix.
+}
+  \item{constr.list}{
+a list of length equal to number of constraints to be imposed, containing information for reparametization to an unconstrained optimization. Attribute \code{'C'} is the constraint matrix, and \code{'start'} and \code{'end'} refer to the corresponding column positions of the model matrix. 
+}
+  \item{lsp}{
+vector of candidate tuning parameters (\eqn{\log(\lambda)}).
+}
+  \item{nulldim}{
+null space dimension, ordinarily equal to  the order of the derivative penalty.
+}
+  \item{store.reml}{
+logical: should the pointwise REML criterion at each grid point be included in the output?  \code{FALSE} by default, as this output can be very large.
+}
+  \item{store.fitted}{
+logical: should the fitted values be included in the output? \code{FALSE} by default.
+}
+}
+
+\value{
+An object of class \code{"qplsc.mp"}, which is a list with elements:
+\item{fitted}{fitted value matrix, if \code{store.fitted = TRUE}.}
+\item{edf}{matrix giving the effective degrees of freedom per parameter, as in Wood (2004), for each model.}
+\item{pwdf}{vector of point-wise degrees of freedom, equal to the column sums of \code{edf}.}
+\item{pwlsp}{vector of point-wise log smoothing parameters.}
+\item{coef}{matrix of coefficients.}
+\item{reml}{matrix giving the point-wise REML criterion at each grid point, if \code{store.reml = TRUE}.}
+\item{modmat}{model matrix.}
+\item{penmat}{penalty matrix.}
+\item{RinvU}{\eqn{R^{-1}U}, as in Reiss et al. (2013); this and \code{tau} are used for plotting.}
+\item{tau}{singular values of \eqn{R^{-T}PR^{-1}}, as in Reiss et al. (2013).}
+\item{sigma2}{vector of variance estimates.}
+\item{ttu}{matrix for transformation to an unconstrained problem.}
+}
+\references{
+Wood, S. N. (2004). Stable and efficient multiple smoothing parameter
+estimation for generalized additive models. \emph{Journal of the American Statistical Association}, 99, 673--686. 
+}
+\author{
+Lei Huang \email{huangracer@gmail.com},
+Yin-Hsiu Chen \email{enjoychen0701@gmail.com}, and
+Philip Reiss \email{phil.reiss@nyumc.org}
+}
+
+\examples{
+## see semipar.mp
+}
+

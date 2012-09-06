@@ -1,0 +1,43 @@
+\name{semipar4d}
+\alias{semipar4d}
+%- Also NEED an '\alias' for EACH other topic documented here.
+\title{
+Massively parallel semiparametric regression for 4-dimensional data
+}
+\description{
+This is a wrapper function for \code{\link{semipar.mp}} to handle 3D image responses.
+}
+\usage{
+semipar4d(arr4d, formula, lsp, data, range.basis = NULL, knots = "quantile", 
+          rm.constr = FALSE, random = NULL, store.reml = FALSE, 
+          store.fitted = FALSE)
+}
+%- maybe also 'usage' for other objects documented here.
+\arguments{
+  \item{arr4d}{
+a 4-dimensional response array, where the first 3 dimensions refer to spatial coordinates and the last dimension corresponds to different images.
+}
+  \item{formula,lsp,data,range.basis,knots,rm.constr,random,store.reml,store.fitted}{
+see \code{\link{semipar.mp}}.
+}
+}
+\value{
+An object of class \code{"\link{semipar.mp}"}, with two changes. (1) If \code{store.fitted = TRUE}, the fitted values are given as a 4-dimensional array. (2) A \code{call} component is included.
+}
+\author{
+Yin-Hsiu Chen \email{enjoychen0701@gmail.com} and
+Philip Reiss \email{phil.reiss@nyumc.org}
+}
+
+\seealso{
+\code{\link{semipar.mp}}
+}
+\examples{
+data(test)
+d4 = test$d4
+x = test$x
+semi.obj = semipar4d(d4, ~sf(x), lsp=-5:5, data=data.frame(x = x))
+plot(semi.obj, which.vox = 4)
+}
+% Add one or more standard keywords, see file 'KEYWORDS' in the
+% R documentation directory.

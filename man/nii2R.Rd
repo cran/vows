@@ -1,0 +1,48 @@
+\name{nii2R}
+\alias{nii2R}
+%- Also NEED an '\alias' for EACH other topic documented here.
+\title{
+NIfTI-to-R conversion}
+\description{
+Reads in a NIfTI (.nii) file and puts the data in a 4-dimensional array.
+}
+\usage{
+nii2R(niifilename, which.vols = NULL, savename = NULL, remove.zero = TRUE,
+      maskname = NULL, ind = NULL, ind.auto = TRUE, coord = NULL)
+}
+%- maybe also 'usage' for other objects documented here.
+\arguments{
+  \item{niifilename}{
+the path for the .nii file.
+}
+  \item{which.vols}{
+which volumes (images) to include.  In terms of the 4D array, this refers to subsetting in the fourth dimension. If \code{NULL} (the default), all volumes are included.    
+}
+  \item{savename}{
+if non-\code{NULL}, the name of the .RData file to which the 4D array will be saved.
+}
+  \item{remove.zero}{
+optional when maskname is not provided. If \code{TRUE}, a binary array indicating the voxels with nonzero measures based on the first three dimension of the nii file will be provided. If \code{FALSE}, a 3D array with \code{TRUE} everywhere will be provided.  
+}
+  \item{maskname}{
+name of a .nii file providing a "mask", a 3D binary array indicating which voxels to include.
+}
+  \item{ind, ind.auto}{
+\code{ind} is an optional list saying which indices (which slices of the image) to include in each of the three dimensions.  If \code{NULL}, this will be all slices with nonzero data if \code{ind.auto = TRUE}, and all slices otherwise.
+}
+  \item{coord}{
+coordinates of the first three dimensions of the 4D array created.
+}
+}
+\value{
+a 4-dimensional array.
+}
+
+\author{
+Lei Huang \email{huangracer@gmail.com} and
+Philip Reiss \email{phil.reiss@nyumc.org}
+}
+
+\seealso{
+\code{\link{R2nii}}
+}
