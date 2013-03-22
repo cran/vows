@@ -72,7 +72,9 @@ data(test)
 d4 = test$d4
 x = test$x
 semi.obj = semipar4d(d4, ~sf(x), -5:5, data.frame(x = x))
-fkmobj = funkmeans4d(semi.obj, d4, ncomp=6, centers=3)
+temp = semi.obj$list.all[[1]]
+fdobj = fd(coef = semi.obj$coef[(temp$start):(temp$end), ], basisobj=temp$basis)
+fkmobj = funkmeans4d(fdobj, d4, ncomp=6, centers=3)
 funkpanel(fkmobj, semi.obj, d4, x)
 }
 

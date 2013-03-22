@@ -6,11 +6,11 @@ Functional k-means clustering for parallel smooths for 4-dimensional data}
 \description{
 This is a wrapper function for \code{\link{funkmeans}} to handle 3D image responses.}
 \usage{
-funkmeans4d(obj, arr4d, ...)
+funkmeans4d(fdobj, arr4d, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{obj}{a massively parallel smoothing object, of class \code{"\link{semipar.mp}"}. 
+  \item{fdobj}{a functional data object, of class \code{"\link[fda]{fd}"}, defining the set of curves being clustered.
 }
   \item{arr4d}{a 4-dimensional array containing the raw data that were smoothed at each point.  The first 3 dimensions refer to x, y, and z coordinates and the last dimension corresponds to different images.
 }

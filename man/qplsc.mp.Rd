@@ -55,6 +55,8 @@ An object of class \code{"qplsc.mp"}, which is a list with elements:
 \item{ttu}{matrix for transformation to an unconstrained problem.}
 }
 \references{
+Reiss, P. T., Huang, L., Chen, Y.-H., Huo, L., Tarpey, T., and Mennes, M. (2013). Massively parallel nonparametric regression, with an application to developmental brain mapping. \emph{Journal of Computational and Graphical Statistics}, to appear.  Available at \url{http://works.bepress.com/phil_reiss/24}
+
 Wood, S. N. (2004). Stable and efficient multiple smoothing parameter
 estimation for generalized additive models. \emph{Journal of the American Statistical Association}, 99, 673--686. 
 }

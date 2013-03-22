@@ -52,6 +52,6 @@ function(rlrtobj, array4d, predictor, disp = c("stat","p","fdr"), titl="", xlab=
     imgplot <- rp.control(title = titl, slice=slice)
     rp.tkrplot(imgplot, tkrp, draw, action=scatterplot, hscale = 0.8, vscale = 1.2, pos=list(row=0, column=0))
     rp.tkrplot(imgplot, tkrp1, legend.draw, hscale = 0.8, vscale = 1.2, pos=list(row=0, column=1))
-    rp.slider(panel = imgplot, var=slice, action = redraw, from = 1, to = dim(arr)[3], resolution = 1, title=ttl, showvalue=is.null(coord), pos=list(row=1, column=1))
+    rp.slider(panel = imgplot, variable=slice, action = redraw, from = 1, to = dim(arr)[3], resolution = 1, title=ttl, showvalue=is.null(coord), pos=list(row=1, column=1))
 }
 

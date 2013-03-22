@@ -7,8 +7,6 @@ funkpanel <- function(fkmobj, semiobj, arr4d, predictor, titl="", xlab="", ylab=
         else stop("Please set 'colvec' to a numeric or character vector of colors")
     }
     tkrp = tkrp1 = NULL
-    which.smooth = fkmobj$which.smooth
-    temp = semiobj$list.all[[which.smooth]]
     screened = min(fkmobj$arr.cluster, na.rm=TRUE) == 0
     if (!is.null(semiobj$incl.inds)) attr(arr4d,"has.data")= semiobj$include
     data.inds = which(attributes(arr4d)$has.data==TRUE, arr.ind=TRUE)
@@ -41,8 +39,8 @@ funkpanel <- function(fkmobj, semiobj, arr4d, predictor, titl="", xlab="", ylab=
  
     legend.draw <- function(panel){
     	fdobj = list()
-    	fdobj$coef <- semiobj$coef[(temp$start):(temp$end),]
-    	fdobj$basis <- temp$basis
+    	fdobj$coef <- fkmobj$coef
+    	fdobj$basis <- fkmobj$basis
     	plot(fkmobj, fdobj = fdobj, xlab = xlab, ylab = ylab, deriv = deriv.legend, 
     	     ylim = ylim.legend, ncluster = ncluster, colvec = colvec)
     	panel
@@ -51,6 +49,6 @@ funkpanel <- function(fkmobj, semiobj, arr4d, predictor, titl="", xlab="", ylab=
     imgplot <- rp.control(title = titl, slice=slice)
     rp.tkrplot(imgplot, tkrp, draw, action=scatterplot, hscale = 0.8, vscale = 1.2, pos=list(row=0, column=0))
     rp.tkrplot(imgplot, tkrp1, legend.draw, hscale = 0.8, vscale = 1.2, pos=list(row=0, column=1))
-    rp.slider(panel = imgplot, var=slice, action = redraw, from = 1, to = dim(fkmobj$arr.cluster)[3], resolution = 1, title=ttl, showvalue=is.null(attributes(arr4d)$coord), pos=list(row=1, column=1))
+    rp.slider(panel = imgplot, variable=slice, action = redraw, from = 1, to = dim(fkmobj$arr.cluster)[3], resolution = 1, title=ttl, showvalue=is.null(attributes(arr4d)$coord), pos=list(row=1, column=1))
 }
 

@@ -52,8 +52,8 @@ data(test)
 d4 = test$d4
 x = test$x
 semi.obj = semipar4d(d4, formula = ~sf(x), data = data.frame(x = x), lsp=-5:5)
-fkmobj = funkmeans(semi.obj, ncomp = 8, centers = 6)
 fdobj = fd(coef = semi.obj$coef[-1, ], basis = semi.obj$list.all[[1]]$basis)
+fkmobj = funkmeans(fdobj, ncomp = 8, centers = 6)
 plot(fkmobj, fdobj)
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

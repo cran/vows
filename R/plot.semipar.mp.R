@@ -1,5 +1,5 @@
 plot.semipar.mp <-		
-function(x, Y, arr.ind = NULL, which.vox = NULL, which.smooth = NULL, coverage = 0.95, length.new = 100, ...) {		
+function(x, Y, arr.ind = NULL, which.vox = NULL, which.smooth = NULL, coverage = 0.95, length.new = 100, ylim = NULL, ylab = NULL,  ...) {		
 	if (is.null(arr.ind) & is.null(which.vox)) stop("Must specify either 'arr.ind' or 'which.vox'")	
 		
     tf <- terms.formula(x$formula, specials = "sf")		
@@ -59,8 +59,10 @@ function(x, Y, arr.ind = NULL, which.vox = NULL, which.smooth = NULL, coverage =
 		ord <- order(plot.list[[i]]$x.new)
             lower <- min(plot.list[[i]]$y.hat-mul*sqrt(pwvar))		
             upper <- max(plot.list[[i]]$y.hat+mul*sqrt(pwvar))		
-            range <- upper-lower		
-            plot(plot.list[[i]]$x.new[ord], plot.list[[i]]$y.hat[ord], xlab = terms[i], ylab = smooth.terms[i], type="l", ylim=c(lower-range*0.1, upper+range*0.1), ...)		
+            range <- upper-lower	
+            if (is.null(ylim)) ylim = c(lower-range*0.1, upper+range*0.1)
+            if (is.null(ylab)) ylab = smooth.terms[i]
+            plot(plot.list[[i]]$x.new[ord], plot.list[[i]]$y.hat[ord], xlab = terms[i], ylab = ylab, type="l", ylim= ylim, ...)		
             rug(plot.list[[i]]$x)		
             lines(plot.list[[i]]$x.new[ord], plot.list[[i]]$y.hat[ord]-mul*sqrt(pwvar[ord]), lty=2)		
             lines(plot.list[[i]]$x.new[ord], plot.list[[i]]$y.hat[ord]+mul*sqrt(pwvar[ord]), lty=2)    		

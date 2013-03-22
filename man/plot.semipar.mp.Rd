@@ -9,7 +9,7 @@ Given a massively parallel smoothing object produced by \code{\link{semipar.mp}}
 }
 \usage{
 \method{plot}{semipar.mp}(x, Y, arr.ind = NULL, which.vox = NULL, which.smooth = NULL,
-     coverage = 0.95, length.new = 100, ...)
+     coverage = 0.95, length.new = 100, ylim = NULL, ylab = NULL, ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -34,8 +34,8 @@ the confidence level of the pointwise confidence intervals in the plot.
   \item{length.new}{
 length of the vector of ordered variables with which to predict.
 }
-  \item{\dots}{
-arguments to be passed \code{\link[graphics]{plot}}
+  \item{ylim, ylab, \dots}{
+arguments to be passed to \code{\link[graphics]{plot}}.
 }
 }
 

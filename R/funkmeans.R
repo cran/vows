@@ -1,6 +1,4 @@
-funkmeans = function(obj, which.smooth=1, deriv = 1, lambda = 0, ncomp, centers, nstart = 10) {   
-    temp = obj$list.all[[which.smooth]]
-    fdobj = fd(coef = obj$coef[(temp$start):(temp$end), ], basisobj=temp$basis)
+funkmeans = function(fdobj, deriv = 1, lambda = 0, ncomp, centers, nstart = 10) {   
     deriv.fdobj = deriv.fd(fdobj, deriv)
     harmfdPar = fdPar(deriv.fdobj)
     harmfdPar$lambda = lambda
@@ -10,7 +8,6 @@ funkmeans = function(obj, which.smooth=1, deriv = 1, lambda = 0, ncomp, centers,
     km.obj$coef = fdobj$coef
     km.obj$fpca = fpca.obj
     km.obj$R2 = (1 - km.obj$tot.withinss / km.obj$totss) * sum(km.obj$fpca$varprop) 
-    km.obj$which.smooth = which.smooth
     class(km.obj) = "funkmeans"
     km.obj
 }

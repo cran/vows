@@ -1,6 +1,8 @@
 semipar.mix.mp <- function(Y, x, param=NULL, random, data.ran, k = 10, norder = 4, pen.order=2, knots = "quantile", store.gamm4 = FALSE) {
     require(gamm4)	 
-    if (store.gamm4) gamm4.list <- vector("list", NCOL(Y)) 
+    if (store.gamm4) {
+    	gamm4.list <- vector("list", NCOL(Y)) 
+    }
     if (knots == "quantile") bs = "bq"
     else if (knots == "equispaced") bs = "be"
     coefmat <- matrix(NA, k + NCOL(param)-is.null(param), NCOL(Y))
@@ -46,5 +48,5 @@ semipar.mix.mp <- function(Y, x, param=NULL, random, data.ran, k = 10, norder = 
         if (store.gamm4) gamm4.list[[j]] <- gamm4.obj
     } 
     list(coef = coefmat, bsplinecoef = bsplinecoefmat, pwdf = pwdf, pwlsp = pwlsp, B = B, C = C, 
-         Z = Z, basis = basis)
+         Z = Z, basis = basis, gamm4.list = if(store.gamm4) gamm4.list else NULL)
 }

@@ -1,8 +1,9 @@
-funkmeans4d <- function(obj, arr4d, ...) {
+funkmeans4d <- function(fdobj, arr4d, ...) {
     has.data = attributes(arr4d)$has.data
-    fkmobj <- funkmeans(obj=obj, ...)
+    fkmobj <- funkmeans(fdobj=fdobj, ...)
   	# centers.fdobj = fd(coef=fkmobj$fpca$meanfd$coef %*% matrix(1,1,centers) + fkmobj$fpca$harmonics$coef %*% t(fkmobj$centers), basisobj=temp$basis)
-  	include = if (is.null(obj$include)) has.data else obj$include
+  	# include = if (is.null(obj$include)) has.data else obj$include
+  	include = has.data
   	arr.cluster = array(NA, dim(include))
   	arr.cluster[include & !is.na(include)] = fkmobj$cluster
   	arr.cluster[has.data & !is.na(include) & !include] = 0
@@ -13,6 +14,7 @@ funkmeans4d <- function(obj, arr4d, ...) {
 	# May need to get some other attributes from arr4d
     # fkmobj$centers.fdobj = centers.fdobj
     fkmobj$arr.cluster = arr.cluster
+    fkmobj$include
     class(fkmobj) = c(class(fkmobj), "funkmeans4d")
     fkmobj
 }
