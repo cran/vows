@@ -1,3 +1,38 @@
+#' Plot massively parallel semiparametric models
+#' 
+#' Given a massively parallel smoothing object produced by
+#' \code{\link{semipar.mp}}, the function plots the fitted smooth(s) for a
+#' given point (e.g., at a given voxel).
+#' 
+#' 
+#' @param x an object of class "\code{\link{semipar.mp}}".
+#' @param Y an \eqn{n \times V} outcome matrix.
+#' @param arr.ind a 3-element vector specifying the element of the
+#' 3-dimensional array of locations (e.g., voxels) for which plotting is
+#' desired. If \code{NULL}, \code{which.vox} must be specified.
+#' @param which.vox the index of the voxel to be plotted. If \code{NULL},
+#' \code{arr.ind} must be specified.
+#' @param which.smooth the index of the smooth term of which the confidence
+#' interval plot is to be displayed. The default value is \code{NULL} which
+#' refers to displaying the plots for all the smooth terms in the model.
+#' @param coverage the confidence level of the pointwise confidence intervals
+#' in the plot.
+#' @param length.new length of the vector of ordered variables with which to
+#' predict.
+#' @param ylim,ylab, arguments to be passed to \code{\link[graphics]{plot}}.
+#' @param ... arguments to be passed to \code{\link[graphics]{plot}}.
+#' @author Yin-Hsiu Chen \email{enjoychen0701@@gmail.com}, Philip Reiss
+#' \email{phil.reiss@@nyumc.org}, and Lan Huo
+#' @examples
+#' 
+#' n<-32
+#' Ys <- matrix(0, n, 5)
+#' for(i in 1:n) Ys[i,]<--2:2+rnorm(5, i^2, i^0.5)+sin(i)
+#' x1 <- rnorm(n,0,5)
+#' x2 <- 1:n+runif(n, 1, 20)
+#' semipar.obj <- semipar.mp(~x1+sf(x2,k=10),Y=Ys,lsp=seq(5,50,,30))
+#' plot(semipar.obj, Y=Ys, which.vox=2)
+#' @export
 plot.semipar.mp <-		
 function(x, Y, arr.ind = NULL, which.vox = NULL, which.smooth = NULL, coverage = 0.95, length.new = 100, ylim = NULL, ylab = NULL,  ...) {		
 	if (is.null(arr.ind) & is.null(which.vox)) stop("Must specify either 'arr.ind' or 'which.vox'")	
@@ -12,7 +47,7 @@ function(x, Y, arr.ind = NULL, which.vox = NULL, which.smooth = NULL, coverage =
         smooth.terms[i] <- paste("sf(", split.term[1], ")", sep="")		
 	}	
 		
-    alpha = 1-coverage; mul = qnorm(1-alpha/2)		
+    alpha = 1-coverage	
     intercept <- attr(terms.formula(x$formula, specials="sf"), "intercept")		
 		
     ################################################################################		
@@ -57,6 +92,7 @@ function(x, Y, arr.ind = NULL, which.vox = NULL, which.smooth = NULL, coverage =
 		pwvar <- x$sigma2[which.vox] * (B %*% x$RinvU)^2 %*% (1 / (1 + exp(x$pwlsp[which.vox]) * x$tau))
 		
 		ord <- order(plot.list[[i]]$x.new)
+		mul = qnorm(1-alpha/2)	
             lower <- min(plot.list[[i]]$y.hat-mul*sqrt(pwvar))		
             upper <- max(plot.list[[i]]$y.hat+mul*sqrt(pwvar))		
             range <- upper-lower	

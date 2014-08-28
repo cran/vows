@@ -1,8 +1,55 @@
+#' Massively parallel restricted likelihood ratio tests (internal)
+#' 
+#' Conducts a possibly very large number of restricted likelihood ratio tests
+#' (Crainiceanu and Ruppert, 2004), with specified random-effects design matrix
+#' and fixed-effects design matrix, for a polynomial null against a smooth
+#' alternative.
+#' 
+#' The \pkg{RLRsim} package of Scheipl et al. (2008) is used to simulate the
+#' common null distribution of the RLRT statistics.
+#' 
+#' @param Y ordinarily, an \eqn{n \times V} outcome matrix, where \eqn{V} is
+#' the number of hypotheses (in brain imaging applications, the number of
+#' voxels
+#' @param X the fixed-effects design matrix.
+#' @param Z the random-effects design matrix.
+#' @param loginvsp a grid of candidate values of the log inverse smoothing
+#' parameter.
+#' @param evalarg if \code{Y} is of class "fd", the argument values at which
+#' the functions are evaluated.
+#' @param get.df logical: Should the effective df of the smooth at each point
+#' be obtained?
+#' @return A list with components \item{table}{matrix of log restricted
+#' likelihood ratio values at each grid point, for each test.} \item{stat}{RLRT
+#' statistics, i.e., the supremum of the values in \code{table} for each test.}
+#' \item{logsp}{log smoothing parameter at which the supremum of the restricted
+#' likelihood ratio is attained for each test.} \item{df}{if \code{get.df =
+#' TRUE}, the effective degrees of freedom corresponding to the log smoothing
+#' parameter values in \code{logsp}.} \item{sim}{values simulated from the null
+#' distribution of the restricted likelihood ratio statistic.}
+#' \item{pvalue}{p-values for the RLRT statistics.}
+#' \item{fdr}{Benjamini-Hochberg false discovery rates corresponding to the
+#' above p-values.} \item{call}{the call to the function.}
+#' @author Lei Huang \email{huangracer@@gmail.com} and Philip Reiss
+#' \email{phil.reiss@@nyumc.org}
+#' @references Crainiceanu, C. M., and Ruppert, D. (2004).  Likelihood ratio
+#' tests in linear mixed models with one variance component.  \emph{Journal of
+#' the Royal Statistical Society, Series B}, 66(1), 165--185.
+#' 
+#' Scheipl, F., Greven, S. and Kuechenhoff, H. (2008). Size and power of tests
+#' for a zero random effect variance or polynomial regression in additive and
+#' linear mixed models. \emph{Computational Statistics & Data Analysis}, 52(7),
+#' 3283--3299.
+#' @examples
+#' 
+#' Y = matrix(rnorm(6000), nrow=20)
+#' x = rnorm(20)
+#' z = rep(1:5, each = 4)
+#' t4. = rlrt.mp.fit(Y, x, z, loginvsp = -22:0)
+#' @export
 rlrt.mp.fit <-
 function(Y, X, Z, loginvsp, evalarg=NULL, get.df=FALSE) {
-    require(RLRsim)
-    sim = RLRTSim(X, Z, qrX=qr(X), sqrt.Sigma=diag(NCOL(Z)))
-    try(require(fda))
+    sim = RLRsim::RLRTSim(X, Z, qrX=qr(X), sqrt.Sigma=diag(NCOL(Z)))
 	if (!exists("is.fd")) is.fd = function(mm) FALSE
 	n = NROW(X); p = NCOL(X); q = NCOL(Z)
 	svdZZ = svd(tcrossprod(Z))

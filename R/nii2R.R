@@ -1,7 +1,34 @@
+#' NIfTI-to-R conversion
+#' 
+#' Reads in a NIfTI (.nii) file and puts the data in a 4-dimensional array.
+#' 
+#' 
+#' @param niifilename the path for the .nii file.
+#' @param which.vols which volumes (images) to include.  In terms of the 4D
+#' array, this refers to subsetting in the fourth dimension. If \code{NULL}
+#' (the default), all volumes are included.
+#' @param savename if non-\code{NULL}, the name of the .RData file to which the
+#' 4D array will be saved.
+#' @param remove.zero optional when maskname is not provided. If \code{TRUE}, a
+#' binary array indicating the voxels with nonzero measures based on the first
+#' three dimension of the nii file will be provided. If \code{FALSE}, a 3D
+#' array with \code{TRUE} everywhere will be provided.
+#' @param maskname name of a .nii file providing a "mask", a 3D binary array
+#' indicating which voxels to include.
+#' @param ind,ind.auto \code{ind} is an optional list saying which indices
+#' (which slices of the image) to include in each of the three dimensions.  If
+#' \code{NULL}, this will be all slices with nonzero data if \code{ind.auto =
+#' TRUE}, and all slices otherwise.
+#' @param coord coordinates of the first three dimensions of the 4D array
+#' created.
+#' @return a 4-dimensional array.
+#' @author Lei Huang \email{huangracer@@gmail.com} and Philip Reiss
+#' \email{phil.reiss@@nyumc.org}
+#' @seealso \code{\link{R2nii}}
+#' @export
 nii2R <-
 function(niifilename, which.vols=NULL, savename=NULL, remove.zero=TRUE, maskname=NULL, ind=NULL, ind.auto=TRUE, coord=NULL)   {
-    require(Rniftilib)
-    bigobj = nifti.image.read(niifilename)
+    bigobj = Rniftilib::nifti.image.read(niifilename)
 	if (length(dim(bigobj))==3) {
 		tmp = array(dim=c(dim(bigobj), 1))
 		tmp[ , , , 1] = bigobj[]
@@ -44,7 +71,7 @@ function(niifilename, which.vols=NULL, savename=NULL, remove.zero=TRUE, maskname
         d4[,,,i]=temp
     }
     
-    if (!is.null(maskname))   has.data = nifti.image.read(maskname)[x.ind,y.ind,z.ind]!=0
+    if (!is.null(maskname))   has.data = Rniftilib::nifti.image.read(maskname)[x.ind,y.ind,z.ind]!=0
     else if (remove.zero)   has.data =  apply(d4, 1:3, function(mat) !all(mat==0|is.infinite(mat)|is.na(mat)))
          else   has.data = array(TRUE, dim(d4)[1:3])
     

@@ -1,5 +1,61 @@
 # Must change pwdf; see end of Wood (2004), sec. 1.2. 
 # Also, should add standard error estimates!  (PR, Dec. 29/11)
+
+
+#' Quadratically penalized least squares with constraints
+#' 
+#' Fits a possibly very large number of models, with common design matrix, by
+#' quadratically penalized least squares, with identifiability constraints
+#' imposed. This function serves as the fitting engine for
+#' \code{\link{semipar.mp}}.
+#' 
+#' 
+#' @param Y an \eqn{n \times V} response matrix (\eqn{V} refers to number of
+#' models fitted in parallel, e.g., voxels in neuroimaging applications).
+#' @param modmat model matrix, e.g., a matrix of B-spline basis functions.
+#' @param penmat penalty matrix.
+#' @param constr.list a list of length equal to number of constraints to be
+#' imposed, containing information for reparametization to an unconstrained
+#' optimization. Attribute \code{'C'} is the constraint matrix, and
+#' \code{'start'} and \code{'end'} refer to the corresponding column positions
+#' of the model matrix.
+#' @param lsp vector of candidate tuning parameters (\eqn{\log(\lambda)}).
+#' @param nulldim null space dimension, ordinarily equal to the order of the
+#' derivative penalty.
+#' @param store.reml logical: should the pointwise REML criterion at each grid
+#' point be included in the output?  \code{FALSE} by default, as this output
+#' can be very large.
+#' @param store.fitted logical: should the fitted values be included in the
+#' output? \code{FALSE} by default.
+#' @return An object of class \code{"qplsc.mp"}, which is a list with elements:
+#' \item{fitted}{fitted value matrix, if \code{store.fitted = TRUE}.}
+#' \item{edf}{matrix giving the effective degrees of freedom per parameter, as
+#' in Wood (2004), for each model.} \item{pwdf}{vector of point-wise degrees of
+#' freedom, equal to the column sums of \code{edf}.} \item{pwlsp}{vector of
+#' point-wise log smoothing parameters.} \item{coef}{matrix of coefficients.}
+#' \item{reml}{matrix giving the point-wise REML criterion at each grid point,
+#' if \code{store.reml = TRUE}.} \item{modmat}{model matrix.}
+#' \item{penmat}{penalty matrix.} \item{RinvU}{\eqn{R^{-1}U}, as in Reiss et
+#' al. (2014); this and \code{tau} are used for plotting.} \item{tau}{singular
+#' values of \eqn{R^{-T}PR^{-1}}, as in Reiss et al. (2014).}
+#' \item{sigma2}{vector of variance estimates.} \item{ttu}{matrix for
+#' transformation to an unconstrained problem.}
+#' @author Lei Huang \email{huangracer@@gmail.com}, Yin-Hsiu Chen
+#' \email{enjoychen0701@@gmail.com}, and Philip Reiss
+#' \email{phil.reiss@@nyumc.org}
+#' @references Reiss, P. T., Huang, L., Chen, Y.-H., Huo, L., Tarpey, T., and
+#' Mennes, M. (2014). Massively parallel nonparametric regression, with an
+#' application to developmental brain mapping. \emph{Journal of Computational
+#' and Graphical Statistics}, \emph{Journal of Computational and Graphical
+#' Statistics}, 23(1), 232--248.
+#' 
+#' Wood, S. N. (2004). Stable and efficient multiple smoothing parameter
+#' estimation for generalized additive models. \emph{Journal of the American
+#' Statistical Association}, 99, 673--686.
+#' @examples
+#' 
+#' ## see semipar.mp
+#' @export
 qplsc.mp <- function(Y, modmat, penmat, constr.list=NULL, lsp, nulldim=NULL, store.reml=FALSE, store.fitted=FALSE) {
    	n = nrow(Y)
    	if (nrow(modmat) != n) stop(paste("number of rows of 'x' or 'modmat' must match last dimension of 'Y'"))
