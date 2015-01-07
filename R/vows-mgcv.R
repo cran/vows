@@ -43,9 +43,11 @@
 #' Predict.matrix.bspline.smooth(smoo.bq, data.frame(x = seq(min(x.),max(x.),,100)))
 #' 
 #' @name vows-mgcv
+
 #' @export smooth.construct.bq.smooth.spec
 #' @export smooth.construct.be.smooth.spec
 #' @export Predict.matrix.bspline.smooth
+
 NULL
 
 #' @rdname vows-mgcv

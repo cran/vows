@@ -8,6 +8,7 @@
 #' @aliases get.ind rlr.xz vec2img
 #' @author Lei Huang, Yin-Hsiu Chen, Philip Reiss \email{phil.reiss@@nyumc.org} and Ruixin Tan
 #' @name vows-internal
+#' @keywords internal
 #' @export get.ind 
 #' @export rlr.xz
 #' @export vec2img
@@ -15,7 +16,7 @@ NULL
 
 #' @rdname vows-internal
 get.ind <-
-function(arr3d)   {
+function(arr3d) {
     flag = rep(NA, dim(arr3d)[1])
     for (i in  1:length(flag))    {
         cat("First-dimension slice",i,"\n")

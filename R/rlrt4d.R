@@ -20,7 +20,8 @@
 #' x = test$x
 #' rlrtobj = rlrt4d(d4, x, loginvsp = -5:5)
 #' plot(rlrtobj, d4, slice=5)
-#' \donttest{rlrtpanel(rlrtobj, d4, x)}
+
+#' \dontrun{rlrtpanel(rlrtobj, d4, x)}
 #' @export
 rlrt4d <-
 function(arr4d, x=NULL, nbasis = 15, norder=4, nulldim=NULL, loginvsp, get.df=FALSE, B=NULL, P=NULL) {
