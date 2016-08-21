@@ -33,7 +33,7 @@
 #' variance explained by the k clusters.}
 #' @author Philip Reiss \email{phil.reiss@@nyumc.org}, Lei Huang
 #' \email{huangracer@@gmail.com} and Lan Huo
-#' @seealso \code{\link{funkmeans4d}}, \code{\link{funkpanel}}
+#' @seealso \code{\link{funkmeans4d}}
 #' @references Alexander-Bloch, A. F., Reiss, P. T., Rapoport, J., McAdams, H.,
 #' Giedd, J. N., Bullmore, E. T., and Gogtay, N. (2014). Abnormal cortical
 #' growth in schizophrenia targets normative modules of synchronized
@@ -49,7 +49,12 @@
 #' \emph{Journal of Classification}, 20, 93--114.
 #' @examples
 #' 
-#' # See example for funkpanel
+#' data(test)
+#' d4 = test$d4
+#' x = test$x
+#' semi.obj = semipar4d(d4, ~sf(x), -5:5, data.frame(x = x))
+#' fdobj = extract.fd(semi.obj)
+#' fkmobj = funkmeans4d(fdobj, d4, ncomp=6, centers=3)
 #' @export
 #' @import fda 
 funkmeans = function(fdobj, deriv = 1, lambda = 0, ncomp, centers, nstart = 10, store.fdobj=TRUE) {   

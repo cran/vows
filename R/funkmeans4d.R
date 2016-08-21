@@ -16,10 +16,10 @@
 #' the cluster memberships.
 #' @author Philip Reiss \email{phil.reiss@@nyumc.org}, Lei Huang
 #' \email{huangracer@@gmail.com} and Lan Huo
-#' @seealso \code{\link{funkmeans}}, \code{\link{funkpanel}}
+#' @seealso \code{\link{funkmeans}}
 #' @examples
 #' 
-#' # See example for funkpanel
+#' # See example for funkmeans
 #' @export
 funkmeans4d <- function(fdobj, arr4d, ...) {
     has.data = attributes(arr4d)$has.data

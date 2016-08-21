@@ -14,8 +14,7 @@
 #' linear models, \code{\link{rlrt.mp}} and \code{\link{rlrt4d}} for restricted
 #' likelihood ratio tests (RLRTs) of a parametric null hypothesis vs. a smooth
 #' alternative, and \code{\link{semipar.mp}} and \code{\link{semipar4d}} for
-#' smoothing (see Reiss et al., 2014).  Functions for interactive visualization
-#' (\code{\link{rlrtpanel}} and \code{\link{funkpanel}}) are also provided.
+#' smoothing (see Reiss et al., 2014).
 #' 
 #' @name vows-package
 #' @aliases vows-package vows
@@ -33,7 +32,7 @@
 #' @keywords package
 NULL
 
-#' @import fda gamm4 rpanel
+#' @import fda gamm4 
 NULL
 
 

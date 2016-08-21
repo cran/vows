@@ -33,7 +33,7 @@
 #' @param ... arguments passed to \code{\link[graphics]{plot}.}
 #' @author Yin-Hsiu Chen \email{enjoychen0701@@gmail.com}, Philip Reiss
 #' \email{phil.reiss@@nyumc.org}, Lan Huo, and Ruixin Tan
-#' @seealso \code{\link{funkmeans}}, \code{\link{funkpanel}}
+#' @seealso \code{\link{funkmeans}}
 #' @examples
 #' 
 #' data(test)
